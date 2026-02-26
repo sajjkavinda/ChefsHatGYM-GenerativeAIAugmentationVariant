@@ -15,55 +15,6 @@ This repository contains a **Generative PPO reinforcement learning agent** for t
 
 ---
 
-## Repository Structure
-
-ChefsHatGYM/                                                                                                                                                                           
-├── src/                                                                                                                                                                               
-│   ├── agents/                                                                                                                                                                        
-│   │   ├── agent_generative_ppo.py      # Generative PPO agent implementation                                                                                                         
-│   │   ├── random_agent.py              # Random baseline agent                                                                                                                       
-│   │   ├── agent_dqn.py                                                                                                                                                               
-│   │   ├── agent_ppo.py                                                                                                                                                               
-│   │   ├── agent_ppo_old.py                                                                                                                                                           
-│   │   ├── base_agent.py                                                                                                                                                              
-│   │   ├── base_agent_server.py                                                                                                                                                       
-│   │   ├── larger_value.py                                                                                                                                                            
-│   │   └── __init__.py                                                                                                                                                                
-│   │                                                                                                                                                                                  
-│   ├── rooms/                                                                                                                                                                         
-│   │   ├── room.py                                                                                                                                                                    
-│   │   ├── local_communicationn.py                                                                                                                                                    
-│   │   └── __init__.py                                                                                                                                                                
-│   │                                                                                                                                                                                  
-│   └── ...                                                                                                                                                                            
-│                                                                                                                                                                                      
-├── task2/                                                                                                                                                                             
-│   ├── train_generative_ppo.py           
-│   └── ...                               
-│
-├── outputs/                               
-│   └── Room_PPO_Gen_<timestamp>/          
-│       ├── agents/                                                                  
-│       │   └── PPO_Gen/                                                                                                                  
-|               └── PLAYER_PPO_Gen.log/                                                                                              
-│       │   └── Random0/                                                                                                                
-|               └── PLAYER_Random0.log/                                                                                                    
-│       │   └── Random1/                                                                                                                
-|               └── PLAYER_Random1.log/                                                                                          
-│       ├── dataset/                                                                                                        
-│       │   └── game_dataset.pkl.csv                                                                                                        
-│                                                                                                                                                              
-├── LICENSE                                                                                                                                                                
-├── README.md 
-├── source_repo_README.md                                                                                                                                                          
-├── Requirements.txt                                                                                                                                                  
-├── setup.py                                                                                                                                                                      
-├── pyproject.toml                                                                                                                                                              
-├── docs/                                                                                                                                                                          
-└── examples/                                                                                                                                                                      
-
----
-
 ## Installation
 
 1. Clone the repository:
@@ -76,7 +27,6 @@ cd ChefsHatGYM
 2. Install Dependencies
 
 pip install -r Requirements.txt
-pip install matplotlib pandas numpy
 
 ## How to run
 Run the following command to train the agent for 100 matches against 3 RandomAgents:
@@ -93,3 +43,35 @@ python task2/plot_scores.py
 Designed for Coventry University assignment purposes (Module-specific variant 6).
 Fully compatible with the official Chef's Hat Gym repository.
 Tested with Python 3.10–3.12 and required packages listed in Requirements.txt.
+
+## Outputs
+
+These logs record in the /output folder:
+
+- Actions selected by the agent
+
+- Environment updates (player actions, match events)
+
+- Match completion signals
+
+- Episode rewards
+
+- Training progress indicators
+
+Reward Curves:
+
+X-axis → Episode (Match Number)
+
+Y-axis → Total Reward per Match
+
+What the Reward Means:
+
++1.0 → Agent finishes first
+
++0.2 → Middle ranking
+
+-0.5 → Last place
+
++0.05 → Valid step reward
+
+-0.1 → Invalid action penalty
