@@ -60,18 +60,18 @@ These logs record in the /output folder:
 
 Reward Curves:
 
-X-axis → Episode (Match Number)
+- X-axis → Episode (Match Number)
 
-Y-axis → Total Reward per Match
+- Y-axis → Total Reward per Match
 
 What the Reward Means:
 
-+1.0 → Agent finishes first
+- +1.0 → Agent finishes first
 
-+0.2 → Middle ranking
+- +0.2 → Middle ranking
 
--0.5 → Last place
+- -0.5 → Last place
 
-+0.05 → Valid step reward
+- +0.05 → Valid step reward
 
--0.1 → Invalid action penalty
+- -0.1 → Invalid action penalty
