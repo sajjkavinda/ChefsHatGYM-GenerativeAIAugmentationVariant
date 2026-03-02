@@ -40,7 +40,7 @@ python task2/plot_scores.py
 
 ## Notes
 
-Designed for Coventry University assignment purposes (Module-specific variant 6).
+Uses RL based agent system to learn through experience.
 Fully compatible with the official Chef's Hat Gym repository.
 Tested with Python 3.10–3.12 and required packages listed in Requirements.txt.
 
