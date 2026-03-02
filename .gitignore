@@ -1,2 +1,5 @@
-output
-output_test
+output/
+output_test/
+pyvenv.cfg
+venv/
+.env/
