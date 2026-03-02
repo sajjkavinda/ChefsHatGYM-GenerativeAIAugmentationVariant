@@ -2,7 +2,6 @@ import sys
 import os
 import asyncio
 
-# add src to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from rooms.room import Room
@@ -20,15 +19,15 @@ def run_room(training=True, matches=100, output_folder="outputs"):
         save_logs_room=False
     )
 
-    # Connect 3 random agents
+    #Connect 3 random agents
     for i in range(3):
         room.connect_player(RandomAgent(name=f"Random{i}", log_directory=room.room_dir))
 
-    # Connect Generative PPO agent
+    #Connect Generative PPO agent
     agent = AgentGenerativePPO(name="PPO_Gen", log_directory=room.room_dir)
     room.connect_player(agent)
 
-    # Run the room asynchronously
+    #Run the room asynchronously
     asyncio.run(room.run())
 
     return room, agent

@@ -1,5 +1,3 @@
-# src/agents/agent_generative_ppo.py
-
 import numpy as np
 import torch
 import torch.nn as nn
@@ -29,16 +27,16 @@ class AgentGenerativePPO(BaseAgent):
     def __init__(self, name, log_directory=""):
         super().__init__(name=name, log_directory=log_directory)
 
-        # PPO settings
+        #PPO settings
         self.gamma = 0.99
         self.clip_eps = 0.2
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        # Network (output size large enough for action space)
+        #Network (output size large enough for action space)
         self.policy = PolicyNetwork().to(self.device)
         self.optimizer = optim.Adam(self.policy.parameters(), lr=3e-4)
 
-        # Memory
+        #Memory
         self.memory = []
         self.episode_rewards = []
         self.current_reward = 0
@@ -47,9 +45,7 @@ class AgentGenerativePPO(BaseAgent):
         self.last_action = None
         self.last_log_prob = None
 
-    # -------------------------------------------------------
-    # ACTION SELECTION
-    # -------------------------------------------------------
+    #ACTION SELECTION
 
     def request_action(self, payload):
 
@@ -76,9 +72,7 @@ class AgentGenerativePPO(BaseAgent):
 
         return chosen_index
 
-    # -------------------------------------------------------
-    # STEP REWARD
-    # -------------------------------------------------------
+    #STEP REWARD
 
     def update_player_action(self, payload):
 
@@ -96,19 +90,15 @@ class AgentGenerativePPO(BaseAgent):
                 "done": False
             })
 
-    # -------------------------------------------------------
-    # FINAL MATCH REWARD
-    # -------------------------------------------------------
+    #FINAL MATCH REWARD
 
     def update_match_over(self, payload):
 
-        # -----------------------------------
-        # SAFE RANKING EXTRACTION
-        # -----------------------------------
+        #SAFE RANKING EXTRACTION
 
         final_reward = 0.0
 
-        # Case 1: ranking exists
+        #Ranking exists
         if "ranking" in payload:
             ranking = payload["ranking"]
 
@@ -119,7 +109,7 @@ class AgentGenerativePPO(BaseAgent):
             else:
                 final_reward = 0.2
 
-        # Case 2: scores exist (more common in Chef’s Hat)
+        #Scores exist (more common in Chef’s Hat)
         elif "scores" in payload and "players" in payload:
 
             players = payload["players"]
@@ -136,14 +126,12 @@ class AgentGenerativePPO(BaseAgent):
                 else:
                     final_reward = 0.2
 
-        # Case 3: unknown format → neutral reward
+        #Unknown format → neutral reward
         else:
             print("Warning: Unknown match_over payload format")
             final_reward = 0.0
 
-        # -----------------------------------
-        # APPLY REWARD SAFELY
-        # -----------------------------------
+        #APPLY REWARD SAFELY
 
         self.current_reward += final_reward
 
@@ -161,9 +149,8 @@ class AgentGenerativePPO(BaseAgent):
 
         if len(self.episode_rewards) % 20 == 0:
             self.plot_rewards()
-        # -------------------------------------------------------
-        # PPO TRAINING
-        # -------------------------------------------------------
+
+    #PPO TRAINING
 
     def train_ppo(self):
 
@@ -201,9 +188,7 @@ class AgentGenerativePPO(BaseAgent):
 
         self.memory = []
 
-    # -------------------------------------------------------
-    # RETURNS
-    # -------------------------------------------------------
+    #RETURNS
 
     def compute_returns(self, rewards, dones):
 
@@ -218,9 +203,7 @@ class AgentGenerativePPO(BaseAgent):
 
         return torch.tensor(returns).float().to(self.device)
 
-    # -------------------------------------------------------
-    # PLOT
-    # -------------------------------------------------------
+    #PLOT FIGURES
 
     def plot_rewards(self):
         plt.figure()
